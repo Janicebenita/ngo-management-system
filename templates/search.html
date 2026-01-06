@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MIS – Project Register</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: #f4f6f9;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        /* SEARCH BOX */
+        .search-box {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .search-box input,
+        .search-box select {
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            min-width: 220px;
+            font-size: 14px;
+        }
+
+        .search-box button {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .search-box button:hover {
+            background: #004a99;
+        }
+
+        /* TABLE */
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            overflow-x: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead {
+            background: #34495e;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th, td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #ddd;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        td.left {
+            text-align: left;
+        }
+
+        tr:hover {
+            background: #f2f6ff;
+        }
+
+        /* STATUS BADGES */
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .green { background: #27ae60; }
+        .red { background: #c0392b; }
+        .orange { background: #e67e22; }
+
+        /* ACTION BUTTONS */
+        .btn {
+            padding: 4px 10px;
+            border-radius: 6px;
+            color: white;
+            font-size: 12px;
+            text-decoration: none;
+            margin: 2px;
+            display: inline-block;
+        }
+
+        .edit {
+            background: #16a085;
+        }
+
+        .delete {
+            background: #e74c3c;
+        }
+
+        .edit:hover { background: #12876f; }
+        .delete:hover { background: #c0392b; }
+
+        .empty {
+            margin-top: 30px;
+            font-size: 16px;
+            color: #777;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>📊 Project Register – MIS</h1>
+
+    <!-- SEARCH FORM -->
+    <form method="post" class="search-box">
+
+        <input type="text" name="project_initiated_year"
+               placeholder="Project Initiated Year">
+
+        <!-- FINANCIAL YEAR DROPDOWN -->
+        <select name="financial_year">
+            <option value="">Financial Year (All)</option>
+            {% for fy in financial_years %}
+                <option value="{{ fy }}"
+                    {% if fy == selected_fy %}selected{% endif %}>
+                    {{ fy }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <input type="text" name="thematic" placeholder="Thematic">
+        <input type="text" name="erp_code" placeholder="ERP Code">
+
+        <button type="submit">🔍 Search</button>
+    </form>
+
+    {% if results %}
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>ERP Code</th>
+                    <th>Project Name</th>
+                    <th>Project Year</th>
+                    <th>Financial Year</th>
+                    <th>Status</th>
+                    <th>Thematic</th>
+                    <th>RO</th>
+                    <th>MOU Start</th>
+                    <th>MOU End</th>
+                    <th>Total Budget (₹)</th>
+                    <th>State</th>
+                    <th>District</th>
+                    <th>Block</th>
+                    <th>Location</th>
+                    <th>Total RO</th>
+                    <th>Adult Men</th>
+                    <th>Adult Women</th>
+                    <th>Total Adults</th>
+                    <th>Boys (0–6)</th>
+                    <th>Girls (0–6)</th>
+                    <th>Total (0–6)</th>
+                    <th>Boys (7+)</th>
+                    <th>Girls (7+)</th>
+                    <th>Total (7+)</th>
+                    <th>Schools</th>
+                    <th>AWC</th>
+                    <th>CCLC</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for row in results %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ row.erp_code }}</td>
+                    <td class="left">{{ row.project_name }}</td>
+                    <td>{{ row.project_initiated_year }}</td>
+
+                    <!-- FINANCIAL YEAR DISPLAY -->
+                    <td>{{ row.financial_year }}</td>
+
+                    <!-- STATUS -->
+                    <td>
+                        {% if row.status == 'Ongoing' %}
+                            <span class="badge green">Ongoing</span>
+                        {% elif row.status == 'Closed' %}
+                            <span class="badge red">Closed</span>
+                        {% else %}
+                            <span class="badge orange">{{ row.status }}</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ row.thematic }}</td>
+                    <td>{{ row.ro }}</td>
+                    <td>{{ row.mou_start_date }}</td>
+                    <td>{{ row.mou_end_date }}</td>
+                    <td>{{ row.total_budget_inr }}</td>
+                    <td>{{ row.state }}</td>
+                    <td>{{ row.districts }}</td>
+                    <td>{{ row.block }}</td>
+                    <td>{{ row.location }}</td>
+                    <td>{{ row.total_ro }}</td>
+                    <td>{{ row.adult_men }}</td>
+                    <td>{{ row.adult_women }}</td>
+                    <td>{{ row.total_adult }}</td>
+                    <td>{{ row.boys_0_6 }}</td>
+                    <td>{{ row.girls_0_6 }}</td>
+                    <td>{{ row.total_children_0_6 }}</td>
+                    <td>{{ row.boys_7_plus }}</td>
+                    <td>{{ row.girls_7_plus }}</td>
+                    <td>{{ row.total_children_7_plus }}</td>
+                    <td>{{ row.schools }}</td>
+                    <td>{{ row.awc }}</td>
+                    <td>{{ row.cclc }}</td>
+
+                    <td>
+                        <a class="btn edit"
+                           href="{{ url_for('edit_project', id=row.id) }}">Edit</a>
+                        <a class="btn delete"
+                           href="{{ url_for('delete_project', id=row.id) }}"
+                           onclick="return confirm('Delete this project?')">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p class="empty">No projects found</p>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

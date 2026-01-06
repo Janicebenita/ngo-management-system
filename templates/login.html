@@ -1,0 +1,276 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>MIS Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        .login-card {
+            background: #fff;
+            width: 380px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .login-card h2 {
+            text-align: center;
+            margin-bottom: 5px;
+            color: #203a43;
+        }
+
+        .login-card p {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .login-card input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 13px;
+            color: #007bff;
+        }
+
+        .login-card button {
+            width: 100%;
+            padding: 12px;
+            background: #203a43;
+            border: none;
+            color: white;
+            font-size: 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-card button:hover {
+            background: #0f2027;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .footer-text {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 20px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <h2>MIS Portal</h2>
+    <p>Management Information System</p>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="error">{{ messages[0] }}</div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="post">
+        <input type="text" name="username" placeholder="Username" required>
+
+        <div class="password-wrapper">
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <span class="toggle-password" onclick="togglePassword()">Show</span>
+        </div>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <div class="footer-text">
+        © 2025 MIS Dashboard
+    </div>
+</div>
+
+<script>
+function togglePassword() {
+    const pwd = document.getElementById("password");
+    const toggle = document.querySelector(".toggle-password");
+
+    if (pwd.type === "password") {
+        pwd.type = "text";
+        toggle.textContent = "Hide";
+    } else {
+        pwd.type = "password";
+        toggle.textContent = "Show";
+    }
+}
+</script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MIS Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(120deg, #0f2027, #203a43, #2c5364); /* Gradient background */
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        .login-card {
+            background: #fff;
+            width: 380px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .login-card h2 {
+            text-align: center;
+            margin-bottom: 5px;
+            color: #203a43;
+        }
+
+        .login-card p {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .login-card input {
+            width: 100%;
+            padding: 16px; /* Taller input box */
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%; /* Vertically center */
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 14px;
+            color: #2563eb; /* Blue like status new */
+            font-weight: 600;
+        }
+
+        .login-card button {
+            width: 100%;
+            padding: 16px; /* Taller button */
+            background: #203a43;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .login-card button:hover {
+            background: #0f2027;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .footer-text {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 20px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <h2>MIS Portal</h2>
+    <p>Management Information System</p>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="error">{{ messages[0] }}</div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="post">
+        <input type="text" name="username" placeholder="Username" required>
+
+        <div class="password-wrapper">
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <span class="toggle-password" onclick="togglePassword()">Show</span>
+        </div>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <div class="footer-text">
+        © 2025 MIS Dashboard
+    </div>
+</div>
+
+<script>
+function togglePassword() {
+    const pwd = document.getElementById("password");
+    const toggle = document.querySelector(".toggle-password");
+
+    if (pwd.type === "password") {
+        pwd.type = "text";
+        toggle.textContent = "Hide";
+    } else {
+        pwd.type = "password";
+        toggle.textContent = "Show";
+    }
+}
+</script>
+
+</body>
+</html>

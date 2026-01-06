@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MIS Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: #f4f6f9;
+        }
+
+        .topbar {
+            background: #203a43;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbar a {
+            color: white;
+            text-decoration: none;
+            background: #e74c3c;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 230px;
+            background: #1f2d3d;
+            min-height: calc(100vh - 60px);
+            padding-top: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 15px 25px;
+            color: #cfd8dc;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            background: #203a43;
+            color: white;
+        }
+
+        .content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .card h3 {
+            color: #555;
+            font-size: 16px;
+        }
+
+        .card p {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 8px;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="topbar">
+    <h2>MIS Dashboard</h2>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</div>
+
+<div class="container">
+
+    <div class="sidebar">
+        <a href="{{ url_for('dashboard') }}">🏠 Dashboard</a>
+        <a href="{{ url_for('search') }}">📊 View Projects</a>
+        <a href="{{ url_for('add_project') }}">➕ Add Project</a>
+        <a href="{{ url_for('projects_by_date') }}">📅 Projects by Date</a>
+    </div>
+
+    <div class="content">
+
+        <h2>Welcome, {{ session.username }}</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Total Projects</h3>
+                <p>{{ total_projects }}</p>
+                <a href="{{ url_for('search') }}">View</a>
+            </div>
+
+            <div class="card">
+                <h3>Ongoing Projects</h3>
+                <p style="color:#27ae60">{{ ongoing_projects }}</p>
+                <a href="{{ url_for('search') }}?status=Ongoing">View</a>
+            </div>
+
+            <div class="card">
+                <h3>Completed Projects</h3>
+                <p style="color:#e74c3c">{{ completed_projects }}</p>
+                <a href="{{ url_for('search') }}?status=Closed">View</a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

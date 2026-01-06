@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Project</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h2>Edit Project</h2>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flash">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="post" class="card">
+        <input type="hidden" name="id" value="{{ project.id }}">
+
+        <h3>Basic Info</h3>
+        <input name="erp_code" placeholder="ERP Code" value="{{ project.erp_code }}" required>
+        <input name="project_name" placeholder="Project Name" value="{{ project.project_name }}" required>
+        <input name="project_initiated_year" placeholder="Project Year" value="{{ project.project_initiated_year }}" required>
+        <input name="thematic" placeholder="Thematic" value="{{ project.thematic }}" required>
+        <input name="ro" placeholder="RO" value="{{ project.ro }}">
+
+        <h3>MOU & Status</h3>
+        <input type="date" name="mou_start_date" value="{{ project.mou_start_date }}">
+        <input type="date" name="mou_end_date" value="{{ project.mou_end_date }}">
+        <select name="status" required>
+            <option value="">--Select Status--</option>
+            <option value="New" {% if project.status == "New" %}selected{% endif %}>New</option>
+            <option value="Ongoing" {% if project.status == "Ongoing" %}selected{% endif %}>Ongoing</option>
+            <option value="Closed" {% if project.status == "Closed" %}selected{% endif %}>Closed</option>
+        </select>
+
+        <h3>Location Info</h3>
+        <input name="state" placeholder="State" value="{{ project.state }}">
+        <input name="districts" placeholder="Districts" value="{{ project.districts }}">
+        <input name="block" placeholder="Block" value="{{ project.block }}">
+        <input name="location" placeholder="Location" value="{{ project.location }}">
+        <input name="rural_urban" placeholder="Rural/Urban" value="{{ project.rural_urban }}">
+
+        <h3>Beneficiaries</h3>
+<label>Total RO</label>
+<input name="total_ro" placeholder="Total RO" value="{{ project.total_ro }}">
+<label>Adult Men</label>
+<input name="adult_men" placeholder="Adult Men" value="{{ project.adult_men }}">
+<label>Adult Women</label>
+<input name="adult_women" placeholder="Adult Women" value="{{ project.adult_women }}">
+<label>Total Adults</label>
+<input name="total_adult" placeholder="Total Adults" value="{{ project.total_adult }}">
+
+<h3>Children 0-6</h3>
+<label>Boys 0-6</label>
+<input name="boys_0_6" placeholder="Boys 0-6" value="{{ project.boys_0_6 }}">
+<label>Girls 0-6</label>
+<input name="girls_0_6" placeholder="Girls 0-6" value="{{ project.girls_0_6 }}">
+<label>Total Children 0-6</label>
+<input name="total_children_0_6" placeholder="Total Children 0-6" value="{{ project.total_children_0_6 }}">
+
+<h3>Children 7+</h3>
+<label>Boys 7+</label>
+<input name="boys_7_plus" placeholder="Boys 7+" value="{{ project.boys_7_plus }}">
+<label>Girls 7+</label>
+<input name="girls_7_plus" placeholder="Girls 7+" value="{{ project.girls_7_plus }}">
+<label>Total Children 7+</label>
+<input name="total_children_7_plus" placeholder="Total Children 7+" value="{{ project.total_children_7_plus }}">
+
+<h3>Youth</h3>
+<label>Youth Boys</label>
+<input name="youth_boys" placeholder="Youth Boys" value="{{ project.youth_boys }}">
+<label>Youth Girls</label>
+<input name="youth_girls" placeholder="Youth Girls" value="{{ project.youth_girls }}">
+<label>Total Youths</label>
+<input name="total_youths" placeholder="Total Youths" value="{{ project.total_youths }}">
+
+
+        <button type="submit">Update Project</button>
+        <a href="{{ url_for('delete_project', id=project.id) }}" onclick="return confirm('Are you sure you want to delete?')">Delete Project</a>
+    </form>
+</body>
+</html>

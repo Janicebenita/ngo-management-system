@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add Project</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<style>
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #edf2f7;
+    margin: 0;
+    padding: 0;
+}
+
+.page-container {
+    padding: 30px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+h2 {
+    color: #1e40af;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+form.card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+/* Section styling */
+.section {
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border-left: 5px solid #2563eb; /* colored accent line */
+}
+
+.section h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #2563eb;
+    font-size: 18px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 5px;
+}
+
+/* Input and select styling */
+input, select {
+    width: 100%;
+    padding: 10px 12px;
+    margin: 6px 0 12px 0;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 5px rgba(37,99,235,0.3);
+    outline: none;
+}
+
+/* Button styling */
+button {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #1e3aa7;
+}
+
+/* Beneficiary table */
+.beneficiary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.beneficiary-table th, .beneficiary-table td {
+    border: 1px solid #cbd5e1;
+    padding: 8px;
+    text-align: center;
+}
+
+.beneficiary-table th {
+    background: #e2e8f0;
+    font-weight: 600;
+}
+
+.beneficiary-table input {
+    width: 90%;
+    padding: 6px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+}
+
+@media (min-width: 768px) {
+    .section.two-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .section.three-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+    }
+}
+</style>
+</head>
+<body>
+<div class="page-container">
+    <h2>Add Project</h2>
+
+    <form method="post" class="card">
+
+        <!-- Basic Info -->
+        <div class="section two-columns">
+            <h3>Basic Info</h3>
+            <input name="erp_code" placeholder="ERP Code" required>
+            <input name="project_name" placeholder="Project Name" required>
+            <input name="project_initiated_year" placeholder="Project Year" required>
+            <input name="thematic" placeholder="Thematic" required>
+            <input name="ro" placeholder="RO">
+        </div>
+
+        <!-- MOU & Status -->
+<div class="section">
+    <h3>MOU & Status</h3>
+
+    <div class="two-columns">
+        <div>
+            <label>MOU Start Date</label>
+            <input type="date" name="mou_start_date">
+        </div>
+
+        <div>
+            <label>MOU End Date</label>
+            <input type="date" name="mou_end_date">
+        </div>
+    </div>
+
+    <!-- Extended Dates -->
+    <div class="three-columns">
+        <div>
+            <label>Extended MOU Date 1</label>
+            <input type="date" name="mou_extended_date_1">
+        </div>
+
+        <div>
+            <label>Extended MOU Date 2</label>
+            <input type="date" name="mou_extended_date_2">
+        </div>
+
+        <div>
+            <label>Extended MOU Date 3</label>
+            <input type="date" name="mou_extended_date_3">
+        </div>
+    </div>
+
+    <div style="margin-top:15px;">
+        <label>Project Status</label>
+        <select name="status" required>
+            <option value="">--Select Status--</option>
+            <option value="New">New</option>
+            <option value="Ongoing">Ongoing</option>
+            <option value="Closed">Closed</option>
+        </select>
+    </div>
+</div>
+
+
+        <!-- Location Info -->
+        <div class="section two-columns">
+            <h3>Location Info</h3>
+            <input name="state" placeholder="State">
+            <input name="districts" placeholder="Districts">
+            <input name="block" placeholder="Block">
+            <input name="location" placeholder="Location">
+            <input name="rural_urban" placeholder="Rural/Urban">
+        </div>
+
+        <!-- Beneficiaries -->
+        <div class="section">
+            <h3>Beneficiaries</h3>
+            <table class="beneficiary-table">
+                <tr>
+                    <th>Category</th>
+                    <th>Male</th>
+                    <th>Female</th>
+                    <th>Total</th>
+                </tr>
+                <tr>
+                    <td>Total RO</td>
+                    <td><input name="total_ro_male" type="number"></td>
+                    <td><input name="total_ro_female" type="number"></td>
+                    <td><input name="total_ro" type="number"></td>
+                </tr>
+                <tr>
+                    <td>Adults</td>
+                    <td><input name="adult_men" type="number"></td>
+                    <td><input name="adult_women" type="number"></td>
+                    <td><input name="total_adult" type="number"></td>
+                </tr>
+                <tr>
+                    <td>Children 0-6</td>
+                    <td><input name="boys_0_6" type="number"></td>
+                    <td><input name="girls_0_6" type="number"></td>
+                    <td><input name="total_children_0_6" type="number"></td>
+                </tr>
+                <tr>
+                    <td>Children 7+</td>
+                    <td><input name="boys_7_plus" type="number"></td>
+                    <td><input name="girls_7_plus" type="number"></td>
+                    <td><input name="total_children_7_plus" type="number"></td>
+                </tr>
+                <tr>
+                    <td>Youth</td>
+                    <td><input name="youth_boys" type="number"></td>
+                    <td><input name="youth_girls" type="number"></td>
+                    <td><input name="total_youths" type="number"></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Schools & AWC -->
+        <div class="section three-columns">
+            <h3>Schools / AWC</h3>
+            <input name="schools" placeholder="Schools">
+            <input name="teachers" placeholder="Teachers">
+            <input name="awc" placeholder="AWC">
+            <input name="awc_functionaries" placeholder="AWC Functionaries">
+            <input name="boys_in_awc" placeholder="Boys in AWC">
+            <input name="girls_in_awc" placeholder="Girls in AWC">
+            <input name="total_children_awc" placeholder="Total Children in AWC">
+        </div>
+
+        <!-- CCLC -->
+        <div class="section three-columns">
+            <h3>CCLC</h3>
+            <input name="cclc" placeholder="CCLC">
+            <input name="cclc_functionaries" placeholder="CCLC Functionaries">
+            <input name="boys_in_cclc" placeholder="Boys in CCLC">
+            <input name="girls_in_cclc" placeholder="Girls in CCLC">
+            <input name="total_children_cclc" placeholder="Total Children in CCLC">
+        </div>
+
+        <button type="submit">Add Project</button>
+    </form>
+</div>
+</body>
+</html>

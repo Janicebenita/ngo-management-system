@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Projects by Date</title>
+    <style>
+        /* ---------- BODY & BACKGROUND ---------- */
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: linear-gradient(to right, #203a43, #2c5364);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #203a43;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 10px;
+        }
+
+        input[type="date"] {
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #203a43;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #0f2027;
+        }
+
+        /* ---------- TABLE STYLING ---------- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background: #203a43;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(even) {
+            background: #f4f6f9;
+        }
+
+        tr:hover {
+            background: #eaeaea;
+        }
+
+        /* ---------- STATUS BADGES ---------- */
+        .badge {
+            padding: 5px 10px;
+            border-radius: 8px;
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .green { background: #27ae60; }
+        .red { background: #e74c3c; }
+        .orange { background: #f39c12; }
+
+        /* ---------- HEADINGS ---------- */
+        h3 {
+            margin-top: 40px;
+            color: #203a43;
+        }
+
+        p {
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>📆 Search Projects by Date</h2>
+
+    <form method="POST">
+        <input type="date" name="selected_date" value="{{ selected_date }}" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if selected_date %}
+        <h3>Ongoing Projects after {{ selected_date }}</h3>
+        {% if projects_ongoing %}
+            <table>
+                <tr>
+                    <th>ERP</th>
+                    <th>Project Name</th>
+                    <th>Status</th>
+                    <th>MOU Start</th>
+                    <th>MOU End</th>
+                    <th>Thematic</th>
+                </tr>
+                {% for p in projects_ongoing %}
+                <tr>
+                    <td>{{ p.erp_code }}</td>
+                    <td>{{ p.project_name }}</td>
+                    <td><span class="badge green">{{ p.status }}</span></td>
+                    <td>{{ p.mou_start_date }}</td>
+                    <td>{{ p.mou_end_date or '-' }}</td>
+                    <td>{{ p.thematic }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No ongoing projects found.</p>
+        {% endif %}
+
+        <h3>Closed Projects before {{ selected_date }}</h3>
+        {% if projects_closed %}
+            <table>
+                <tr>
+                    <th>ERP</th>
+                    <th>Project Name</th>
+                    <th>Status</th>
+                    <th>MOU End</th>
+                    <th>Thematic</th>
+                </tr>
+                {% for p in projects_closed %}
+                <tr>
+                    <td>{{ p.erp_code }}</td>
+                    <td>{{ p.project_name }}</td>
+                    <td><span class="badge red">{{ p.status }}</span></td>
+                    <td>{{ p.mou_end_date }}</td>
+                    <td>{{ p.thematic }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No closed projects found.</p>
+        {% endif %}
+    {% endif %}
+</div>
+
+</body>
+</html>

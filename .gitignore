@@ -1,0 +1,7 @@
+myenv/
+__pycache__/
+db_config.py
+.env
+*.log
+build/
+dist/
